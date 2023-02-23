@@ -124,6 +124,7 @@ int main()
     t1.create();
     t1.create();
     t1.create();
+    t1.Display();
 
     return 0;
 }
