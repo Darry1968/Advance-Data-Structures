@@ -178,6 +178,7 @@ public:
     }
     int Height(struct BSTNode *r)
     {
+        cout << "Calculating for " << r->data << endl;
         int leftHT, rightHT;
         if (r == NULL)
             return 0;
@@ -236,7 +237,8 @@ int main()
     b1.insert1(18);
     b1.insert1(30);
     b1.insert1(15);
-    b1.display();
+
+    // b1.display();
     // cout<<endl;
     // b1.search1(18);
     // cout<<endl;
@@ -245,5 +247,5 @@ int main()
     // b1.Mirror();
     // cout<<endl;
     b1.HT();
-    b1.LevelDisplay1();
+    // b1.LevelDisplay1();
 }

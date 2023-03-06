@@ -21,8 +21,6 @@ public:
     TBTNode *createNode()
     {
         struct TBTNode *tmp = new TBTNode;
-        // if (tmp != NULL)
-        // {
         tmp->left = NULL;
         tmp->right = NULL;
         tmp->lbit = 1;
@@ -31,11 +29,6 @@ public:
         cout << "Enter the data : ";
         cin >> tmp->data;
         return tmp;
-        // }
-        // else
-        // {
-        //     cout << "Memory is not allocated" << endl;
-        // }
     }
     void insert(struct TBTNode *r, struct TBTNode *t)
     {

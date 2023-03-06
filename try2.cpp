@@ -329,13 +329,13 @@ int main()
     // b1.insert1(30);
     // b1.insert1(15);
 
-    b1.insert1(1);
-    b1.insert1(2);
-    b1.insert1(3);
-    b1.insert1(4);
-    b1.insert1(5);
-    b1.insert1(6);
-    b1.insert1(7);
+    // b1.insert1(1);
+    // b1.insert1(2);
+    // b1.insert1(3);
+    // b1.insert1(4);
+    // b1.insert1(5);
+    // b1.insert1(6);
+    // b1.insert1(7);
 
     // b1.display();
     // cout<<endl;
