@@ -336,9 +336,17 @@ int main()
     cout << endl;
 
     b1.search();
+    cout << endl;
+
     b1.Mirror();
+    cout << endl;
+
     b1.PLN();
+    cout << endl;
+
     b1.HT();
+    cout << endl;
+
     b1.LevelDisplay1();
     return 0;
 }
