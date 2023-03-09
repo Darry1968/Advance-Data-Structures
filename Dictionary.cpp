@@ -20,6 +20,8 @@ public:
     }
     void insert(struct DictNode *r, string key, string val)
     {
+        cout << "Entering with key : " << key << " and value : " << val << endl;
+
         struct DictNode *tmp = new DictNode;
         if (root == NULL)
         {
