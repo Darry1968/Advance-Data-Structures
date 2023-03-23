@@ -1,136 +1,170 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
 #include <iostream>
+
 using namespace std;
 
-struct ETreesNode
+struct node
 {
-    char data;
-    struct ETreesNode *left, *right;
+    int pred;
+    int dist;
+    int stat;
 };
 
-class Etree
+struct edge
 {
-    struct ETreesNode *root;
-    struct ETreesNode *st[20];
-    int top;
+    int u, v;
+};
+
+class graph
+{
+    int adjmat[10][10];
+    struct node state[10];
+    struct edge tree[10];
+    int wt;
 
 public:
-    struct ETreesNode *temp, *lnode;
-    Etree()
+    graph()
     {
-        root = NULL;
-        top = -1;
+        wt = 0;
     }
+    void initgraph(int v);
+    void scangraph(int v, int e);
+    void display(int v, int e);
+    int allperm(int v);
+    void span(int v, int e);
+};
 
-    void push(struct ETreesNode *temp)
+int graph::allperm(int v)
+{
+    int i;
+    for (i = 0; i < v; i++)
     {
-        if (top <= 19)
-            st[++top] = temp;
-    }
-
-    struct ETreesNode *pop()
-    {
-        struct ETreesNode *temp;
-        if (top != -1)
+        if (state[i].stat == 0)
         {
-            temp = st[top--];
+            return 0;
         }
-        return temp;
     }
-    bool isOperator(char c)
+    return 1;
+}
+
+void graph::initgraph(int v)
+{
+    int i, j;
+    for (i = 0; i < v; i++)
     {
-        if (isalpha(c) || isdigit(c))
+        for (int j = 0; j < v; j++)
         {
-            return false;
+            adjmat[i][j] = 0;
         }
-        return true;
     }
+}
 
-    void Create_Node()
+void graph::scangraph(int v, int e)
+{
+    int i, s, d, w;
+    for (i = 0; i < e; i++)
     {
-        char exp[20];
-        int len = 0;
-
-        cout << "Enter the expression : ";
-        cin.getline(exp, 20);
-        cout << "Your exp is : ";
-        for (int i = 0; exp[i] != '\0'; i++)
+    l1:
+        cout << i + 1 << endl;
+        cout << "enter source: ";
+        cin >> s;
+        cout << "enter destination: ";
+        cin >> d;
+        cout << "enter weight: ";
+        cin >> w;
+        if ((s >= 1 && s <= v) && (d >= 1 && d <= v))
         {
-            cout << exp[i];
-            len++;
-        }
-
-        cout << endl;
-        for (int i = len - 1; i >= 0; i--)
-        {
-            if (!isOperator(exp[i]))
+            if (adjmat[s - 1][d - 1] == 0 && adjmat[d - 1][s - 1] == 0)
             {
-                temp = new ETreesNode;
-                temp->data = exp[i];
-                temp->left = NULL;
-                temp->right = NULL;
-                // cout << "pushing" << temp->data;
-                push(temp);
+                adjmat[s - 1][d - 1] = w;
+                adjmat[d - 1][s - 1] = w;
             }
             else
             {
-                temp = new ETreesNode;
-                temp->data = exp[i];
-                temp->left = pop();
-                temp->right = pop();
-                push(temp);
+                cout << "edge already exist";
+                goto l1;
             }
         }
-        root = pop();
-    }
-    void Inorder(struct ETreesNode *temp)
-    {
-        if (temp != NULL)
+        else
         {
-
-            Inorder(temp->left);
-            cout << temp->data;
-            Inorder(temp->right);
+            cout << "enter correct values:";
+            goto l1;
         }
     }
-    void preOrder()
-    {
-        struct ETreesNode *pt;
-        pt = root;
-        cout << "Hi";
-        if (pt != NULL)
-        {
+}
 
-            while (1)
+void graph::display(int v, int e)
+{
+    int i, j;
+    for (i = 0; i < v; i++)
+    {
+        cout << endl;
+        for (j = 0; j < v; j++)
+        {
+            cout << adjmat[i][j] << " ";
+        }
+    }
+}
+
+void graph::span(int v, int e)
+{
+    int current, count, min, u1, v1;
+    for (int i = 0; i < v; i++)
+    {
+        state[i].pred = 0;
+        state[i].dist = 999;
+        state[i].stat = 0;
+    }
+    state[0].pred = 0;
+    state[0].dist = 0;
+    state[0].stat = 1;
+    current = 0;
+    count = 0;
+    while (allperm(v) != 1)
+    {
+        for (int i = 0; i < v; i++)
+        {
+            if (adjmat[current][i] > 0 && state[i].stat == 0)
             {
-                while (pt != NULL)
+                if (adjmat[current][i] < state[i].dist)
                 {
-                    cout << pt->data;
-                    push(pt);
-                    pt = pt->left;
+                    state[i].pred = current;
+                    state[i].dist = adjmat[current][i];
                 }
-                if (top != -1)
-                {
-                    pop();
-                    pt = pt->right;
-                }
-                else
-                    return;
+            }
+        }
+        min = 999;
+        for (int i = 0; i < v; i++)
+        {
+            if (state[i].stat == 0 && state[i].dist < min)
+            {
+                current = i;
+                state[current].stat = 1;
+                u1 = state[current].pred;
+                v1 = current;
+                tree[count].u = u1;
+                tree[count].v = v1;
+                count++;
+                wt = wt + state[i].dist;
             }
         }
     }
-    void display()
-    {
-        // cout<<"HELLO";
-        Inorder(root);
-    }
-};
+    cout << "Total cost : " << wt;
+}
 
 int main()
 {
-    Etree t1;
-    t1.Create_Node();
-    // t1.display();
-    t1.preOrder();
-
-    return 0;
+    graph g;
+    g.allperm(3);
+    g.initgraph(3);
+    g.scangraph(3, 3);
+    g.display(3, 3);
+    g.span(3, 3);
 }
