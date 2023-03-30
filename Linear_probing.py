@@ -6,15 +6,16 @@ def acc_set(A):
     for i in range(n):
         x = int(input("Enter value : "))
         p = hashfn(x,n)
-
         if A[p] == 0:
             A[p] = x
         else:
             tmp = (p+1)%n
             while tmp != p:
+                print(f"Trying for {x}")
                 if A[tmp] == 0:
                     A[tmp] = x
                     break
+                p = (p+1) % n
                     
 def display_set(A):
     n = len(A)
