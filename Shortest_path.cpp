@@ -83,6 +83,50 @@ public:
 
     void Dijkstra(int graph[V][V], int src)
     {
+        int dist[V];
+        bool sptSet[V];
+        int parent[V];
+
+        for (int i = 0; i < V; i++)
+        {
+            parent[0] = -1;
+            dist[i] = INT_MAX;
+            sptSet[i] = false;
+        }
+        dist[src] = 0;
+        for (int i = 0; i < V - 1; i++)
+        {
+            int u = minDistance(dist, sptSet);
+            sptSet[u] = true;
+
+            for (int j = 0; j < V; j++)
+            {
+                if (!sptSet[j] && graph[u][j] && dist[u] + graph[u][j] < dist[j])
+                {
+                    parent[j] = u;
+                    dist[j] = dist[u] + graph[u][j];
+                    printSolution(dist, V, parent);
+                }
+            }
+        }
+    }
+
+    void printPath(int parent[], int j)
+    {
+        if (parent[j] == -1)
+            return;
+        printPath(parent, j);
+        cout << parent[j];
+    }
+
+    void printSolution(int dist[], int n, int parent[])
+    {
+        int src = 0;
+        for (int i = 1; i < V; i++)
+        {
+            printf("\n%d->%d\t\t%d\t\t%d", src, i, dist[i], src);
+            printPath(parent, i);
+        }
     }
 };
 int main()
@@ -91,5 +135,5 @@ int main()
     s1.initgraph(V);
     s1.scangraph(V, 2);
     s1.display(V);
-    return 0;
+    s1.Dijkstra() return 0;
 }
