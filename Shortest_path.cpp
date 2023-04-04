@@ -79,14 +79,15 @@ public:
                 cout << adjmat[i][j] << " ";
             }
         }
+        cout << endl;
     }
 
-    void Dijkstra(int graph[V][V], int src)
+    void Dijkstra(int src)
     {
         int dist[V];
         bool sptSet[V];
-        int parent[V];
 
+        int parent[V];
         for (int i = 0; i < V; i++)
         {
             parent[0] = -1;
@@ -94,37 +95,36 @@ public:
             sptSet[i] = false;
         }
         dist[src] = 0;
-        for (int i = 0; i < V - 1; i++)
+
+        for (int count = 0; count < V - 1; count++)
         {
             int u = minDistance(dist, sptSet);
             sptSet[u] = true;
-
-            for (int j = 0; j < V; j++)
-            {
-                if (!sptSet[j] && graph[u][j] && dist[u] + graph[u][j] < dist[j])
+            for (int v = 0; v < V; v++)
+                if (!sptSet[v] && adjmat[u][v] && dist[u] != INT_MAX && dist[u] + adjmat[u][v] < dist[v])
                 {
-                    parent[j] = u;
-                    dist[j] = dist[u] + graph[u][j];
-                    printSolution(dist, V, parent);
+                    parent[v] = u;
+                    dist[v] = dist[u] + adjmat[u][v];
                 }
-            }
         }
+        printSolution(dist, V, parent);
     }
 
     void printPath(int parent[], int j)
     {
         if (parent[j] == -1)
             return;
-        printPath(parent, j);
+        printPath(parent, parent[j]);
         cout << parent[j];
     }
 
     void printSolution(int dist[], int n, int parent[])
     {
         int src = 0;
+        printf("Vertex\t\t Distance \t\t Path");
         for (int i = 1; i < V; i++)
         {
-            printf("\n%d->%d\t\t%d\t\t%d", src, i, dist[i], src);
+            printf("\n%d ->%d \t\t%d\t\t%d", src, i, dist[i], src);
             printPath(parent, i);
         }
     }
@@ -135,5 +135,6 @@ int main()
     s1.initgraph(V);
     s1.scangraph(V, 2);
     s1.display(V);
-    s1.Dijkstra() return 0;
+    s1.Dijkstra(0);
+    return 0;
 }

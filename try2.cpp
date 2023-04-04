@@ -1,354 +1,140 @@
 #include <iostream>
+#include <limits.h>
 using namespace std;
 
-struct BSTNode
+#define V 3
+class Shortest_path
 {
-    int data;
-    struct BSTNode *left;
-    struct BSTNode *right;
-};
-class BSTree
-{
+    int adjmat[10][10];
+
 public:
-    struct BSTNode *root;
-    BSTree()
+    int minDistance(int dist[], bool sptSet[])
     {
-        root = NULL;
-    }
-    void insert(BSTNode *p, int val)
-    {
-        BSTNode *tmp = new BSTNode;
-        if (root == NULL)
-        {
+        int min = INT_MAX, min_index;
 
-            tmp->data = val;
-            tmp->left = NULL;
-            tmp->right = NULL;
-            root = tmp;
-        }
-        else
+        for (int v = 0; v < V; v++)
         {
-            if (p->data <= val)
+            if (sptSet[v] == false && dist[v] <= min)
             {
-                if (p->right != NULL)
+                min = dist[v];
+                min_index = v;
+            }
+        }
+        return min_index;
+    }
+
+    void initgraph(int v)
+    {
+        int i, j;
+        for (i = 0; i < v; i++)
+        {
+            for (int j = 0; j < v; j++)
+            {
+                adjmat[i][j] = 0;
+            }
+        }
+    }
+
+    void scangraph(int v, int e)
+    {
+        int i, s, d, w;
+        for (i = 0; i < e; i++)
+        {
+        l1:
+            cout << i + 1 << endl;
+            cout << "enter source: ";
+            cin >> s;
+            cout << "enter destination: ";
+            cin >> d;
+            cout << "enter weight: ";
+            cin >> w;
+            if ((s >= 1 && s <= v) && (d >= 1 && d <= v))
+            {
+                if (adjmat[s - 1][d - 1] == 0 && adjmat[d - 1][s - 1] == 0)
                 {
-                    insert(p->right, val);
+                    adjmat[s - 1][d - 1] = w;
+                    adjmat[d - 1][s - 1] = w;
                 }
                 else
                 {
-                    tmp->data = val;
-                    tmp->left = NULL;
-                    tmp->right = NULL;
-                    p->right = tmp;
+                    cout << "edge already exist";
+                    goto l1;
                 }
             }
             else
             {
-                if (p->left != NULL)
-                {
-                    insert(p->left, val);
-                }
-                else
-                {
-                    tmp->data = val;
-                    tmp->left = NULL;
-                    tmp->right = NULL;
-                    p->left = tmp;
-                }
+                cout << "enter correct values:";
+                goto l1;
             }
         }
     }
-    void insert1(int val)
+    void display(int v)
     {
-        insert(root, val);
-    }
-    void InOrder(struct BSTNode *tmp)
-    {
-        if (tmp != NULL)
+        int i, j;
+        for (i = 0; i < V; i++)
         {
-            // left-root-right
-            InOrder(tmp->left);
-            cout << tmp->data;
             cout << endl;
-            InOrder(tmp->right);
-        }
-    }
-    void PostOrder(struct BSTNode *tmp)
-    {
-        if (tmp != NULL)
-        {
-            // left-right-root
-            PostOrder(tmp->left);
-            PostOrder(tmp->right);
-            cout << tmp->data;
-            cout << endl;
-        }
-    }
-    void PreOrder(struct BSTNode *tmp)
-    {
-        if (tmp != NULL)
-        {
-            // root-left-right
-            cout << tmp->data;
-            cout << endl;
-            PreOrder(tmp->left);
-            PreOrder(tmp->right);
-        }
-    }
-    void search(struct BSTNode *tmp, int n)
-    {
-        if (tmp != NULL)
-        {
-            if (tmp->data == n)
+            for (j = 0; j < V; j++)
             {
-                cout << "\nElement Found" << endl;
-                return;
+                cout << adjmat[i][j] << " ";
             }
-            else if (tmp->data > n)
-            {
-
-                search(tmp->left, n);
-            }
-            else
-            {
-
-                search(tmp->right, n);
-            }
-        }
-        else
-        {
-            cout << "Element Not Found";
-        }
-    }
-    void search1(int n)
-    {
-        search(root, n);
-    }
-    void display()
-    {
-        cout << "InOrder : " << endl;
-        InOrder(root);
-        cout << "\nPostOrder :" << endl;
-        PostOrder(root);
-        cout << "\nPreOrder :" << endl;
-        PreOrder(root);
-    }
-
-    void Mirror_Image(struct BSTNode *r)
-    {
-        if (r == NULL)
-        {
-            return;
-        }
-        else
-        {
-            Mirror_Image(r->left);
-            Mirror_Image(r->right);
-            struct BSTNode *temp;
-            temp = r->left;
-            r->left = r->right;
-            r->right = temp;
-        }
-    }
-    void Mirror()
-    {
-        Mirror_Image(root);
-        cout << "Displaying in INORDER way : " << endl;
-        InOrder(root);
-    }
-
-    void printLeafNode(struct BSTNode *r)
-    {
-        if (r == NULL)
-            return;
-        else if (r->left == NULL && r->right == NULL)
-        {
-            cout << r->data << " ";
-        }
-        else
-        {
-            printLeafNode(r->left);
-            printLeafNode(r->right);
-        }
-    }
-    void PLN()
-    {
-        cout << "Leaf Nodes are : ";
-        printLeafNode(root);
-    }
-    int Height(struct BSTNode *r)
-    {
-        int leftHT, rightHT;
-        if (r == NULL)
-            return 0;
-        else
-        {
-            leftHT = Height(r->left);
-            rightHT = Height(r->right);
-            if (leftHT > rightHT)
-                return leftHT + 1;
-            return rightHT + 1;
-        }
-    }
-    void HT()
-    {
-        int h;
-        h = Height(root);
-        cout << "Height of tree is : " << h << endl;
-    }
-
-    void LevelDisplay(struct BSTNode *tmp, int l)
-    {
-        if (tmp == NULL)
-            return;
-        else
-        {
-            if (tmp == NULL)
-            {
-                return;
-            }
-            else if (l == 0)
-            {
-                cout << tmp->data << " ";
-            }
-            else
-            {
-                LevelDisplay(tmp->left, l - 1);
-                LevelDisplay(tmp->right, l - 1);
-            }
-        }
-    }
-    void LevelDisplay1()
-    {
-        int h = Height(root);
-        cout << "Sidha ->" << endl;
-        for (int i = 0; i < h; i++)
-        {
-            LevelDisplay(root, i);
         }
     }
 
-    void LevelDisplay2(struct BSTNode *tmp, int l)
+    void Dijkstra(int src)
     {
-        if (tmp == NULL)
-            return;
-        else
-        {
-            if (tmp == NULL)
-            {
-                return;
-            }
-            else if (l == 0)
-            {
-                cout << tmp->data << " ";
-            }
-            else
-            {
-                LevelDisplay2(tmp->left, l - 1);
-                LevelDisplay2(tmp->right, l - 1);
-            }
-        }
-    }
-    void LevelDisplay3()
-    {
-        int h = Height(root);
-        // cout << "h : " << h;
-        cout << "\nUlta ->" << endl;
-        for (int i = h; i >= 0; i--)
-        {
-            LevelDisplay2(root, i);
-        }
-    }
-    void findPaths(struct BSTNode *tmp, int path[], int pathLen)
-    {
-        if (tmp == NULL)
-            return;
-        else
-        {
-            path[pathLen] = tmp->data;
-            pathLen++;
+        int dist[V];
+        bool sptSet[V];
 
-            if (tmp->left == NULL && tmp->right == NULL)
-            {
-                for (int i = 0; i < pathLen; i++)
+        int parent[V];
+        for (int i = 0; i < V; i++)
+        {
+            parent[0] = -1;
+            dist[i] = INT_MAX;
+            sptSet[i] = false;
+        }
+        dist[src] = 0;
+
+        for (int count = 0; count < V - 1; count++)
+        {
+            int u = minDistance(dist, sptSet);
+            sptSet[u] = true;
+            for (int v = 0; v < V; v++)
+                if (!sptSet[v] && adjmat[u][v] && dist[u] != INT_MAX && dist[u] + adjmat[u][v] < dist[v])
                 {
-                    cout << path[i] << " ";
+                    parent[v] = u;
+                    dist[v] = dist[u] + adjmat[u][v];
                 }
-                cout << endl;
-            }
-            else
-            {
-                findPaths(tmp->left, path, pathLen);
-                findPaths(tmp->right, path, pathLen);
-            }
+        }
+        printSolution(dist, V, parent);
+    }
+
+    void printSolution(int dist[], int n, int parent[])
+    {
+        int src = 0;
+        printf("\nVertex \t Distance \tPath");
+        for (int i = 1; i < V; i++)
+        {
+            printf("\n%d ->%d \t %d\t\t%d", src, i, dist[i], src);
+            printPath(parent, i);
         }
     }
-    void getPaths()
-    {
-        int path[15];
-        findPaths(root, path, 0);
-    }
-    bool isBST(BSTNode *tmp)
-    {
-        if (tmp == NULL)
-        {
-            return true;
-        }
 
-        if (tmp->left != NULL && tmp->left->data > tmp->data)
-        {
-            return false;
-        }
-        if (tmp->right != NULL && tmp->right->data < tmp->data)
-        {
-            return false;
-        }
-
-        if (!isBST(tmp->left) || !isBST(tmp->right))
-        {
-            return false;
-        }
-
-        return true;
-    }
-    void CheckBST()
+    void printPath(int parent[], int j)
     {
-        if (isBST(root))
-            cout << "Tree is BST" << endl;
-        else
-            cout << "Tree is not a BST" << endl;
+        if (parent[j] == -1)
+            return;
+
+        printPath(parent, parent[j]);
+        cout << parent[j];
     }
 };
-
 int main()
 {
-    BSTree b1;
-    // b1.insert1(10);
-    // b1.insert1(5);
-    // b1.insert1(18);
-    // b1.insert1(30);
-    // b1.insert1(15);
-
-    // b1.insert1(1);
-    // b1.insert1(2);
-    // b1.insert1(3);
-    // b1.insert1(4);
-    // b1.insert1(5);
-    // b1.insert1(6);
-    // b1.insert1(7);
-
-    // b1.display();
-    // cout<<endl;
-    // b1.search1(18);
-    // cout<<endl;
-    // b1.PLN();
-    // cout<<endl;
-    // b1.Mirror();
-    // cout<<endl;
-
-    // b1.HT();
-    // b1.LevelDisplay1();
-    // b1.LevelDisplay3();
-    // b1.getPaths();
-    b1.CheckBST();
+    Shortest_path s1;
+    s1.initgraph(V);
+    s1.scangraph(V, 2);
+    s1.display(V);
+    s1.Dijkstra(0);
+    return 0;
 }
