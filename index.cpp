@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string.h>
 using namespace std;
+
 typedef struct EMPLOYEE
 {
     char name[10];
@@ -31,44 +32,42 @@ public:
         Records.salary = 0;
     }
 
-    void Create();
-    void Display();
-    void Update();
-    void Delete();
-    void Append();
-    void Search();
-};
-
-void EMP_class::Create()
-{
-    int i, j;
-    char ch = 'y';
-    fstream seqFile;
-    fstream indexFile;
-    i = 0;
-    indexFile.open("IND.DAT", ios::in | ios::out | ios::binary);
-    seqFile.open("EMP.DAT", ios::in | ios::out | ios::binary);
-
-    do
+    void Create()
     {
-        cout << "Enter name : ";
-        cin.getline(Records.name, 10);
-        cout << "Enter Employee id : ";
-        cin >> Records.emp_id;
-        cout << "Enter Salary : ";
-        cin >> Records.salary;
-        cout << "Enter designation : ";
-        cin.getline(Records.designation, 10);
+        int i, j;
+        char ch = 'y';
+        fstream seqFile;
+        fstream indexFile;
+        i = 0;
+        indexFile.open("IND.DAT", ios::in | ios::out | ios::binary);
+        seqFile.open("EMP.DAT", ios::in | ios::out | ios::binary);
 
-        seqFile.write((char *)&Records, sizeof(Records)) << flush;
-        Ind_Records.emp_id = Records.emp_id;
-        Ind_Records.position = i;
-        indexFile.write((char *)&Ind_Records, sizeof(Ind_Records)) << flush;
+        do
+        {
+            cout << "Enter name : ";
+            cin.getline(Records.name, 10);
+            cout << "Enter Employee id : ";
+            cin >> Records.emp_id;
+            cout << "Enter Salary : ";
+            cin >> Records.salary;
+            cout << "Enter designation : ";
+            cin.getline(Records.designation, 10);
 
-        cout << "DO you want to add more records? : ";
-        cin >> ch;
-    } while (ch == 'y');
-}
+            seqFile.write((char *)&Records, sizeof(Records)) << flush;
+            Ind_Records.emp_id = Records.emp_id;
+            Ind_Records.position = i;
+            indexFile.write((char *)&Ind_Records, sizeof(Ind_Records)) << flush;
+
+            cout << "DO you want to add more records? : ";
+            cin >> ch;
+        } while (ch == 'y');
+    }
+    // void Display();
+    // void Update();
+    // void Delete();
+    // void Append();
+    // void Search();
+};
 
 int main()
 {
@@ -92,21 +91,21 @@ int main()
         case 1:
             list.Create();
             break;
-        case 2:
-            list.Display();
-            break;
-        case 3:
-            list.Update();
-            break;
-        case 4:
-            list.Delete();
-            break;
-        case 5:
-            list.Append();
-            break;
-        case 6:
-            list.Search();
-            break;
+        // case 2:
+        //     list.Display();
+        //     break;
+        // case 3:
+        //     list.Update();
+        //     break;
+        // case 4:
+        //     list.Delete();
+        //     break;
+        // case 5:
+        //     list.Append();
+        //     break;
+        // case 6:
+        //     list.Search();
+        //     break;
         case 7:
             exit(0);
             break;
