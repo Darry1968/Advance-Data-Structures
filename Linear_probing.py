@@ -33,7 +33,7 @@ def hashfn(x,n):
 def main():
     A = []
     while True:
-        print("1. Accept\n2. Display\n3.Exit\n")
+        print("1. Accept\n2. Display\n3. Exit\n")
         ch = int(input("Enter your choice : "))
         if ch == 1:
             acc_set(A)
