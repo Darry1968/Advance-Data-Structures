@@ -1,10 +1,11 @@
 def acc_set(A):
     n = int(input("Enter the size of hash table : "))
+    no = int(input("Enter number of elements : "))
     A.clear()
     for i in range(n):
         A.append(0)
-    for i in range(n):
-        x = int(input("Enter value : "))
+    for i in range(no):
+        x = int(input("Enter value of key : "))
         p = hashfn(x,n)
         if A[p] == 0:
             A[p] = x
@@ -23,7 +24,7 @@ def display_set(A):
         print("Hash table is empty")
     else:
         for i in range(n):
-            print(A[i])
+            print(A[i],end=" | ")
 
 def hashfn(x,n):
     p = x%n
