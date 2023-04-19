@@ -54,13 +54,17 @@ class Graph:
     def span(self, v, e):
         current = 0
         count = 0
+        # for all vertex
         for i in range(v):
             self.state[i].pred = 0
             self.state[i].dist = 999
             self.state[i].stat = 0
+
+        # for starting vertex
         self.state[0].pred = 0
         self.state[0].dist = 0
         self.state[0].stat = 1
+
         while self.allperm(v) != 1:
             for i in range(v):
                 if self.adjmat[current][i] > 0 and self.state[i].stat == 0:
