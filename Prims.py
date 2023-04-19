@@ -82,8 +82,8 @@ class Graph:
 
 if __name__ == '__main__':
     g = Graph()
-    g.allperm(3)
-    g.initgraph(3)
-    g.scangraph(3, 3)
-    g.display(3, 3)
-    g.span(3, 3)
+    g.allperm(6)
+    g.initgraph(6)
+    g.scangraph(6, 10)
+    g.display(6, 10)
+    g.span(6, 10)
