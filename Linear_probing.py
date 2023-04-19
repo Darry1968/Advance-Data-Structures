@@ -15,7 +15,7 @@ def acc_set(A):
                 if A[tmp] == 0:
                     A[tmp] = x
                     break
-                p = (p+1) % n
+                tmp = (tmp + 1) % n
                     
 def display_set(A):
     n = len(A)
