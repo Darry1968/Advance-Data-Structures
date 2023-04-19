@@ -206,7 +206,7 @@ public:
         }
         visited[sv - 65] = 1;
 
-        while (front != -1 and front <= rear)
+        while (front != -1 && front <= rear)
         {
             // cout<<"FRONT"<<front<<"REAR "<<rear<<endl;
             e1 = q[front];
@@ -476,7 +476,7 @@ public:
         }
         visited[sv - 65] = 1;
 
-        while (front != -1 and front <= rear)
+        while (front != -1 && front <= rear)
         {
             // cout<<"FRONT"<<front<<"REAR "<<rear<<endl;
             e1 = q[front];
