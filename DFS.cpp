@@ -173,9 +173,9 @@ public:
 int main()
 {
     Graph g1;
-    g1.ScanGraph(5, 5);
+    g1.ScanGraph(3, 3);
     g1.DisplayGraph();
-    g1.dummy();
+    // g1.dummy();
 
     return 0;
 }
