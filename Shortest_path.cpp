@@ -86,11 +86,11 @@ public:
     {
         int dist[V];
         bool sptSet[V];
-
         int parent[V];
+
         for (int i = 0; i < V; i++)
         {
-            parent[0] = -1;
+            parent[i] = -1;
             dist[i] = INT_MAX;
             sptSet[i] = false;
         }
