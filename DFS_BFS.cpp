@@ -117,10 +117,8 @@ public:
         int top = -1;
         cout << "\nenter start vertex: ";
         cin >> sv;
-        // sv = sv+65;
         struct edge *e1 = new edge;
         e1->name = sv;
-        // cout<<e1->name;
         e1->link = NULL;
         top++;
         st[top] = e1;
@@ -129,19 +127,15 @@ public:
         {
             visited[i] = 0;
         }
-        //       cout<<"reached";
         while (top != -1)
         {
             e1 = st[top];
-            //  cout<<"poped->"<<e1->name;
             top--;
             int t = e1->name - 65;
-            // cout<<endl<<"t->"<<t;
             sv = e1->name;
             struct Node *tmp = s;
             if (visited[t] == 0)
             {
-                // cout<<2;
                 visited[t] = 1;
                 cout << e1->name;
 
@@ -149,8 +143,6 @@ public:
                 {
                     if (tmp->data == sv)
                     {
-                        // cout<<tmp->data;
-                        //                     cout<<"breaking";
                         break;
                     }
                     else
@@ -161,19 +153,13 @@ public:
 
                 struct edge *e;
                 e = tmp->adj;
-                // cout<<"e->"<<e;
                 if (e != NULL)
                 {
                     do
                     {
-
-                        // cout<<endl<<"pushing->"<<e->name<<endl;
-
                         st[++top] = e;
-                        // cout<<endl<<e->name;
                         e = e->link;
 
-                        // cout<<
                     } while (e != NULL);
                 }
             }
@@ -191,10 +177,8 @@ public:
         cout << "\nenter start vertex: ";
         cin >> sv;
 
-        // sv = sv+65;
         struct edge *e1 = new edge;
         e1->name = sv;
-        //  cout<<e1->name;
         e1->link = NULL;
         rear++;
         q[rear] = e1;
@@ -208,13 +192,11 @@ public:
 
         while (front != -1 && front <= rear)
         {
-            // cout<<"FRONT"<<front<<"REAR "<<rear<<endl;
             e1 = q[front];
             cout << e1->name << " ";
             front++;
             sv = e1->name;
             int t = sv - 65;
-            // cout<<endl<<"t->"<<t;
 
             struct Node *tmp = s;
 
@@ -222,8 +204,6 @@ public:
             {
                 if (tmp->data == sv)
                 {
-                    // cout<<tmp->data;
-                    // cout<<"breaking";
                     break;
                 }
                 else
@@ -234,21 +214,18 @@ public:
 
             struct edge *e;
             e = tmp->adj;
-            // cout<<"e->"<<e;
             if (e != NULL)
             {
                 do
                 {
 
                     int t1 = e->name - 65;
-                    //   cout<<endl<<"pushing->"<<t1<<visited[t1];
                     if (visited[t1] != 1)
                     {
 
                         rear++;
                         q[rear] = e;
                         visited[t1] = 1;
-                        //  cout<<endl<<e->name<<"rear"<<rear;;
                     }
                     e = e->link;
                 } while (e != NULL);
