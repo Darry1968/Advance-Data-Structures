@@ -170,8 +170,11 @@ int main()
     t1.display();
     cout << "\nPre order display : ";
     t1.Preorder();
-    // t1.Display2();
     cout << "\nPost order display : ";
     t1.Display3();
     return 0;
 }
+
+/*  Provide input
+    +a*bc
+*/
