@@ -213,11 +213,11 @@ public:
         cin >> val;
         if (Search(root, val) == 1)
         {
-            cout << "Found the shit" << endl;
+            cout << "Found the Key" << endl;
         }
         else
         {
-            cout << "Shit doesn't exists" << endl;
+            cout << "Key doesn't exists" << endl;
         }
     }
 
@@ -348,6 +348,12 @@ int main()
     b1.HT();
     cout << endl;
 
+    cout << "Displaying Levelwise : " << endl;
     b1.LevelDisplay1();
     return 0;
 }
+
+/*
+    there are no inputs here except
+    for search provide any key its on you and do not change any line
+*/
