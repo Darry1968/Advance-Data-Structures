@@ -20,8 +20,6 @@ public:
     }
     void insert(struct DictNode *r, string key, string val)
     {
-        cout << "Entering with key : " << key << " and value : " << val << endl;
-
         struct DictNode *tmp = new DictNode;
         if (root == NULL)
         {
@@ -91,7 +89,7 @@ public:
         {
             if (strcmp(key.c_str(), (r->key).c_str()) == 0)
             {
-                cout << "Found";
+                cout << "Found" << endl;
             }
             else if (strcmp(key.c_str(), (r->key).c_str()) > 0)
             {
@@ -155,13 +153,17 @@ int main()
 {
     Dictionary d1;
     d1.Insert("A", "darshan");
-    d1.Insert("B", "darshan");
-    d1.Insert("C", "darshan");
-    d1.Insert("D", "darshan");
+    d1.Insert("B", "Ninad");
+    d1.Insert("C", "Atharva");
+    d1.Insert("D", "Saty");
     d1.Insert("roll", "2213273");
     d1.Insert("div", "E");
     d1.Display();
-    // d1.for_search("5");
+
+    cout << "\nSearching for key : " << endl;
+    d1.for_search("D");
+
+    cout << "\nDeleting key : " << endl;
     d1.Delete();
     d1.Display();
     return 0;
