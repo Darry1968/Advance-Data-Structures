@@ -270,3 +270,33 @@ int main()
     g1.dummy();
     return 0;
 }
+
+/*
+    Inputs -
+    Enter source : A
+    Enter Destination : B
+    Edge no. : 2
+    Enter source : A
+    Enter Destination : C
+    Edge no. : 3
+    Enter source : B
+    Enter Destination : C
+
+    OutPut -
+    A-->B-->C
+    |
+    B-->C
+    |
+    C
+    Ye diagram adjacency list hai
+
+    enter start vertex: A
+    ACB
+
+    enter start vertex: A
+    A B C
+
+    If they asked for more than 3 input then make changes here
+    g1.ScanGraph(3, 3);
+    any number
+*/
