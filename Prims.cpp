@@ -159,3 +159,23 @@ int main()
     g.display(3, 3);
     g.span(3, 3);
 }
+
+/*
+    Input and output-
+    1
+    enter source: 1
+    enter destination: 3
+    enter weight: 5
+    2
+    enter source: 1
+    enter destination: 2
+    enter weight: 6
+    3
+    enter source: 2
+    enter destination: 3
+    enter weight: 7
+
+    0 6 5
+    6 0 7
+    5 7 0 Total cost : 11
+*/
