@@ -117,7 +117,16 @@ int main()
     t1.create();
     t1.create();
     t1.create();
+    cout << "\nOutput is : " << endl;
     t1.Display();
 
     return 0;
 }
+
+/*
+    Inputs - 20 21 12 11 26 69
+    Output must be - 11 12 20 21 26 69
+
+    hint to verify whether code is working or not -
+    provide your input and check Output is in increasing order
+*/
