@@ -1,161 +1,120 @@
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <cstring>
+#include <iomanip>
+
 using namespace std;
 
-struct node
+// Define the structure of the index record
+struct IndexRecord
 {
-    int pred;
-    int dist;
-    int stat;
+    char key[10];
+    long offset;
 };
 
-struct edge
-{
-    int u, v;
-};
+// Define the size of the index record
+const int RECORD_SIZE = sizeof(IndexRecord);
 
-class graph
+// Function to add a new index record
+void addRecord(fstream &indexFile)
 {
-    int adjmat[10][10];
-    struct node state[10];
-    struct edge tree[10];
-    int wt;
+    IndexRecord record;
 
-public:
-    graph()
-    {
-        wt = 0;
-    }
-    void initgraph(int v);
-    void scangraph(int v, int e);
-    void display(int v, int e);
-    int allperm(int v);
-    void span(int v, int e);
-};
+    cout << "Enter the key: ";
+    cin >> record.key;
+    cout << "Enter the offset: ";
+    cin >> record.offset;
 
-int graph::allperm(int v)
-{
-    int i;
-    for (i = 0; i < v; i++)
-    {
-        if (state[i].stat == 0)
-        {
-            return 0;
-        }
-    }
-    return 1;
+    // Write the record to the end of the file
+    indexFile.seekp(0, ios::end);
+    indexFile.write(reinterpret_cast<char *>(&record), RECORD_SIZE);
 }
 
-void graph::initgraph(int v)
+// Function to search for an index record
+void searchRecord(fstream &indexFile)
 {
-    int i, j;
-    for (i = 0; i < v; i++)
+    char key[10];
+    IndexRecord record;
+
+    cout << "Enter the key to search for: ";
+    cin >> key;
+
+    // Search the file for the record with the matching key
+    indexFile.seekg(0, ios::beg);
+    while (indexFile.read(reinterpret_cast<char *>(&record), RECORD_SIZE))
     {
-        for (int j = 0; j < v; j++)
+        if (strcmp(record.key, key) == 0)
         {
-            adjmat[i][j] = 0;
+            cout << "Record found:" << endl;
+            cout << "Key: " << record.key << endl;
+            cout << "Offset: " << record.offset << endl;
+            return;
         }
     }
+
+    // If the key is not found, print an error message
+    cout << "Record not found." << endl;
 }
 
-void graph::scangraph(int v, int e)
+// Function to print all index records
+void printRecords(fstream &indexFile)
 {
-    int i, s, d, w;
-    for (i = 0; i < e; i++)
-    {
-    l1:
-        cout << i + 1 << endl;
-        cout << "enter source: ";
-        cin >> s;
-        cout << "enter destination: ";
-        cin >> d;
-        cout << "enter weight: ";
-        cin >> w;
-        if ((s >= 1 && s <= v) && (d >= 1 && d <= v))
-        {
-            if (adjmat[s - 1][d - 1] == 0 && adjmat[d - 1][s - 1] == 0)
-            {
-                adjmat[s - 1][d - 1] = w;
-                adjmat[d - 1][s - 1] = w;
-            }
-            else
-            {
-                cout << "edge already exist";
-                goto l1;
-            }
-        }
-        else
-        {
-            cout << "enter correct values:";
-            goto l1;
-        }
-    }
-}
+    IndexRecord record;
 
-void graph::display(int v, int e)
-{
-    int i, j;
-    for (i = 0; i < v; i++)
-    {
-        cout << endl;
-        for (j = 0; j < v; j++)
-        {
-            cout << adjmat[i][j] << " ";
-        }
-    }
-}
+    cout << setw(10) << "Key" << setw(10) << "Offset" << endl;
+    cout << "-----------------------" << endl;
 
-void graph::span(int v, int e)
-{
-    int current, count, min, u1, v1;
-    for (int i = 0; i < v; i++)
+    // Read each record and print its key and offset
+    indexFile.seekg(0, ios::beg);
+    while (indexFile.read(reinterpret_cast<char *>(&record), RECORD_SIZE))
     {
-        state[i].pred = 0;
-        state[i].dist = 999;
-        state[i].stat = 0;
+        cout << setw(10) << record.key << setw(10) << record.offset << endl;
     }
-    state[0].pred = 0;
-    state[0].dist = 0;
-    state[0].stat = 1;
-    current = 0;
-    count = 0;
-    while (allperm(v) != 1)
-    {
-        for (int i = 0; i < v; i++)
-        {
-            if (adjmat[current][i] > 0 && state[i].stat == 0)
-            {
-                if (adjmat[current][i] < state[i].dist)
-                {
-                    state[i].pred = current;
-                    state[i].dist = adjmat[current][i];
-                }
-            }
-        }
-        min = 999;
-        for (int i = 0; i < v; i++)
-        {
-            if (state[i].stat == 0 && state[i].dist < min)
-            {
-                current = i;
-                state[current].stat = 1;
-                u1 = state[current].pred;
-                v1 = current;
-                tree[count].u = u1;
-                tree[count].v = v1;
-                count++;
-                wt = wt + state[i].dist;
-            }
-        }
-    }
-    cout << "Total cost : " << wt;
 }
 
 int main()
 {
-    graph g;
-    g.allperm(3);
-    g.initgraph(3);
-    g.scangraph(3, 3);
-    g.display(3, 3);
-    g.span(3, 3);
+    fstream indexFile("index.dat", ios::in | ios::out | ios::binary);
+
+    // If the index file does not exist, create it
+    if (!indexFile)
+    {
+        indexFile.open("index.dat", ios::out | ios::binary);
+        indexFile.close();
+        indexFile.open("index.dat", ios::in | ios::out | ios::binary);
+    }
+
+    int choice;
+    do
+    {
+        cout << endl;
+        cout << "1. Add a new record" << endl;
+        cout << "2. Search for a record" << endl;
+        cout << "3. Print all records" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            addRecord(indexFile);
+            break;
+        case 2:
+            searchRecord(indexFile);
+            break;
+        case 3:
+            printRecords(indexFile);
+            break;
+        case 4:
+            break;
+        default:
+            cout << "Invalid choice. Please try again." << endl;
+            break;
+        }
+    } while (choice != 4);
+
+    indexFile.close();
+    return 0;
 }
