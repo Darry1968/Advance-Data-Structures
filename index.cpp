@@ -291,3 +291,7 @@ int main()
 
     return 0;
 }
+
+/*
+    You have to create both files EMP.DAT and IND.DAT code is not designed in the way to create files automatically
+*/
