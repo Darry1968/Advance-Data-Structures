@@ -166,7 +166,7 @@ int main()
     b1.insert1(30);
     b1.insert1(15);
     b1.Display();
-    // b1.for_search(20);
+    b1.for_search(20);
     b1.Modify1();
     b1.Display();
 
