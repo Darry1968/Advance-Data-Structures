@@ -25,6 +25,7 @@ def display_set(A):
     else:
         for i in range(n):
             print(A[i],end=" | ")
+    print()
 
 def hashfn(x,n):
     p = x%n
@@ -47,3 +48,35 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+'''
+    Input and output
+    1. Accept
+    2. Display
+    3. Exit
+
+    Enter your choice : 1
+    Enter the size of hash table : 10
+    Enter number of elements : 6
+    Enter value of key : 11
+    Enter value of key : 22
+    Enter value of key : 32
+    Trying for 32
+    Enter value of key : 44
+    Enter value of key : 24
+    Trying for 24
+    Enter value of key : 55
+    Trying for 55
+    1. Accept
+    2. Display
+    3. Exit
+
+    Enter your choice : 2
+    0 | 11 | 22 | 32 | 44 | 24 | 55 | 0 | 0 | 0 |
+    1. Accept
+    2. Display
+    3. Exit
+
+    Enter your choice : 3
+    End of the program
+'''
