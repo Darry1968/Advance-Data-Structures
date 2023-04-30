@@ -245,6 +245,7 @@ public:
         InorderDisplay(root);
     }
 
+    // PRINTING LEAF NODES
     void printLeafNode(struct BSTNode *r)
     {
         if (r == NULL)
@@ -287,7 +288,7 @@ public:
         h = Height(root);
         cout << "Height of tree is : " << h << endl;
     }
-
+    // lEVEL DISPLAY
     void LevelDisplay(struct BSTNode *tmp, int l)
     {
         if (tmp == NULL)
