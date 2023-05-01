@@ -44,11 +44,44 @@ class File:
             pickle.dump(self.e,file)
 
     def Delete(self):
-        pass
+        data  = int(input("Enter a employee whose data you want to delete : "))
+        with open("seq.dat", "rb") as f:
+            employees = []
+            while True:
+                try:
+                    emp = pickle.load(f)
+                    employees.append(emp)
+                except EOFError:
+                    break
+        
+        employees = [emp for emp in employees if emp.emp_id != data]
+
+        with open("seq.dat", "wb") as f:
+            for emp in employees:
+                pickle.dump(emp,f)
+                
 
     def Update(self):
-        pass
-
+        emp_id = int(input("Enter employee id: "))
+        ls = []
+        found = False
+        with open("seq.dat", "rb") as f:
+            employees = pickle.load(f)
+            ls.append(employees)
+        for emp in ls:
+            if emp.emp_id == emp_id:
+                found = True
+                emp.name = input("Enter updated name: ")
+                emp.designation = input("Enter updated designation: ")
+                emp.salary = int(input("Enter updated salary: "))
+                break
+        if not found:
+            print("Employee not found.")
+        else:
+            with open("seq.dat", "wb") as f:
+                pickle.dump(employees, f)
+     
+        
 if __name__ == '__main__':
     f= File()
     while True:
