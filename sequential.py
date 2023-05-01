@@ -25,12 +25,51 @@ class File:
 
     def Display(self):
         with open("seq.dat","rb") as file:
-            obj = pickle.load(file)
             print(f"Name\tEmployee id\tDesignation\tSalary")
             print("-------------------------------------------------")
-            print(f"{obj.name:<10}{obj.emp_id:<15}{obj.designation:<15}{obj.salary}")
+            while True:
+                try:
+                    obj = pickle.load(file)
+                    print(f"{obj.name:<10}{obj.emp_id:<15}{obj.designation:<15}{obj.salary}")
+                except EOFError:
+                    break
 
-f= File()
+    def Append(self):
+        self.e.name = input("Enter new employee name : ")
+        self.e.emp_id = int(input("Enter new employee id : "))
+        self.e.designation = input("Enter new employee's designation : ")
+        self.e.salary = int(input("Enter new salary of employee : "))
 
-f.create()
-f.Display()
+        with open('seq.dat','ab') as file:
+            pickle.dump(self.e,file)
+
+    def Delete(self):
+        pass
+
+    def Update(self):
+        pass
+
+if __name__ == '__main__':
+    f= File()
+    while True:
+        print("\n1. Create\n2. Display\n3. Delete\n4. Append\n5. Update\n6. Exit")
+        
+        ch = int(input("\nEnter your choice : "))
+        if ch == 1:
+            f.create()
+        elif ch == 2:
+            f.Display()
+        elif ch == 3:
+            f.Delete()
+        elif ch == 4:
+            f.Append()
+        elif ch == 5:
+            f.Update()
+        elif ch == 6:
+            exit()
+        else:
+            print("Wrong choice enter again!!")
+
+
+
+
