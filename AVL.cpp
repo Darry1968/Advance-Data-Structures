@@ -1,3 +1,7 @@
+/*
+Nahi aane wala
+*/
+
 #include <iostream>
 using namespace std;
 
