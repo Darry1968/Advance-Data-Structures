@@ -2,169 +2,170 @@
 #include <string.h>
 using namespace std;
 
-struct DictNode
+struct Dictnode
 {
     string key, value;
-    struct DictNode *left, *right;
+    struct Dictnode *left, *right;
 };
 
-class Dictionary
+class Dict
 {
-    struct DictNode *root;
-    string temp;
+    struct Dictnode *root;
 
 public:
-    Dictionary()
+    Dict()
     {
         root = NULL;
     }
-    void insert(struct DictNode *r, string key, string val)
+    void insert1(string k, string v)
     {
-        struct DictNode *tmp = new DictNode;
+        insert(root, k, v);
+    }
+    void insert(struct Dictnode *r, string k, string v)
+    {
         if (root == NULL)
         {
-            tmp->key = key;
-            tmp->value = val;
+            struct Dictnode *tmp = new Dictnode;
+            tmp->key = k;
+            tmp->value = v;
             tmp->left = NULL;
             tmp->right = NULL;
             root = tmp;
         }
         else
         {
-            temp = r->key;
-            if (strcmp(temp.c_str(), key.c_str()) > 0)
-            {
-                if (r->left == NULL)
-                {
-                    tmp->key = key;
-                    tmp->value = val;
-                    tmp->left = NULL;
-                    tmp->right = NULL;
-                    r->left = tmp;
-                }
-                else
-                {
-                    insert(r->left, key, val);
-                }
-            }
-            else
+            if (strcmp(r->key.c_str(), k.c_str()) <= 0)
             {
                 if (r->right == NULL)
                 {
-                    tmp->key = key;
-                    tmp->value = val;
+                    struct Dictnode *tmp = new Dictnode;
+                    tmp->key = k;
+                    tmp->value = v;
                     tmp->left = NULL;
                     tmp->right = NULL;
                     r->right = tmp;
                 }
                 else
                 {
-                    insert(r->right, key, val);
+                    insert(r->right, k, v);
                 }
-            }
-        }
-    }
-
-    void Insert(string key, string val)
-    {
-        insert(root, key, val);
-    }
-    void Inorder(struct DictNode *tmp)
-    {
-        if (tmp != NULL)
-        {
-            Inorder(tmp->left);
-            cout << tmp->key << " : " << tmp->value << endl;
-            Inorder(tmp->right);
-        }
-    }
-    void Display()
-    {
-        Inorder(root);
-    }
-
-    void Search(struct DictNode *p, struct DictNode *r, string key)
-    {
-        if (root != NULL)
-        {
-            if (strcmp(key.c_str(), (r->key).c_str()) == 0)
-            {
-                cout << "Found" << endl;
-            }
-            else if (strcmp(key.c_str(), (r->key).c_str()) > 0)
-            {
-                Search(r, r->right, key);
             }
             else
             {
-                Search(r, r->left, key);
-            }
-        }
-        else
-        {
-            cout << "Not Found" << endl;
-        }
-    }
-    void for_search(string nme)
-    {
-        Search(NULL, root, nme);
-    }
-
-    void DeleteNode(struct DictNode *p, struct DictNode *r, string key)
-    {
-        if (root != NULL)
-        {
-            if (strcmp(key.c_str(), (r->key).c_str()) == 0)
-            {
-                if (p->left == r)
+                if (r->left == NULL)
                 {
-                    p->left = NULL;
-                    delete r;
+                    struct Dictnode *tmp = new Dictnode;
+                    tmp->key = k;
+                    tmp->value = v;
+                    tmp->left = NULL;
+                    tmp->right = NULL;
+                    r->left = tmp;
                 }
                 else
                 {
-                    p->right = NULL;
-                    delete r;
+                    insert(r->left, k, v);
                 }
             }
-            else if (strcmp(key.c_str(), (r->key).c_str()) > 0)
+        }
+    }
+    void search(struct Dictnode *p, struct Dictnode *r, string key)
+    {
+        if (root == NULL)
+            cout << "Empty tree ";
+        else
+        {
+            if (strcmp(key.c_str(), r->key.c_str()) == 0)
             {
-                DeleteNode(r, r->right, key);
+                if (r->left == NULL && r->right == NULL)
+                {
+
+                    if (p->left = r)
+                    {
+                        p->left = NULL;
+                        delete (r);
+                        cout << "After deletion the dictionary is :" << endl;
+                        Display1();
+                    }
+                    else
+                    {
+                        p->right = NULL;
+                        delete (r);
+                        cout << "After deletion the dictionary is :";
+                        Display1();
+                    }
+                }
+                else if (r->left != NULL && r->right == NULL)
+                {
+                    if (p->left == r)
+                    {
+                        p->left = r->left;
+                        delete (r);
+                        cout << "After deletion of one child in dictionary is :" << endl;
+                        Display1();
+                    }
+                    else
+                    {
+                        p->right = r->left;
+                        delete (r);
+                        cout << "After deletion of one child in dictionary is :" << endl;
+                        Display1();
+                    }
+                }
+                else if (r->left == NULL && r->right != NULL)
+                {
+                    if (p->right == r)
+                    {
+                        p->right = r->right;
+                        delete (r);
+                        cout << "After deletion of one child in dictionary is :" << endl;
+                        Display1();
+                    }
+                    else
+                    {
+                        p->left = r->right;
+                        delete (r);
+                        cout << "After deletion of one child in dictionary is :" << endl;
+                        Display1();
+                    }
+                }
+            }
+            else if (strcmp(key.c_str(), r->key.c_str()) > 0)
+            {
+                search(r, r->right, key);
             }
             else
             {
-                DeleteNode(r, r->left, key);
+                search(r, r->left, key);
             }
         }
-        else
+    }
+    void search1(string key)
+    {
+        search(NULL, root, key);
+    }
+
+    void display(struct Dictnode *tmp)
+    {
+        if (tmp != NULL)
         {
-            cout << "Not Found" << endl;
+            display(tmp->left);
+            cout << tmp->key << " : " << tmp->value << endl;
+            display(tmp->right);
         }
     }
-    void Delete()
+    void Display1()
     {
-        string k;
-        cout << "Enter value to be deleted from the BST : ";
-        cin >> k;
-        DeleteNode(NULL, root, k);
+        display(root);
     }
 };
 int main()
 {
-    Dictionary d1;
-    d1.Insert("A", "darshan");
-    d1.Insert("B", "Ninad");
-    d1.Insert("C", "Atharva");
-    d1.Insert("D", "Saty");
-    d1.Insert("roll", "2213273");
-    d1.Insert("div", "E");
-    d1.Display();
-
-    cout << "\nSearching for key : " << endl;
-    d1.for_search("D");
-
-    cout << "\nDeleting key : " << endl;
-    d1.Delete();
-    d1.Display();
+    Dict d;
+    d.insert1("Q", "PQR");
+    d.insert1("A", "ABC");
+    d.insert1("P", "GFP");
+    d.insert1("C", "LMN");
+    d.Display1();
+    d.search1("P");
     return 0;
 }
