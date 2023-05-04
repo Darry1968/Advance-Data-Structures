@@ -4,10 +4,12 @@ class Node:
         self.dist = 0
         self.stat = 0
 
+
 class Edge:
     def __init__(self):
         self.u = 0
         self.v = 0
+
 
 class Graph:
     def __init__(self):
@@ -84,6 +86,7 @@ class Graph:
                     self.wt += self.state[i].dist
         print("Total cost :", self.wt)
 
+
 if __name__ == '__main__':
     g = Graph()
     g.allperm(3)
@@ -106,7 +109,7 @@ if __name__ == '__main__':
 # enter destination: 2
 # enter weight: 6
 
-# 0 6 5 
-# 6 0 7 
+# 0 6 5
+# 6 0 7
 # 5 7 0
 # Total cost : 11
