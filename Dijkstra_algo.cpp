@@ -139,4 +139,20 @@ int main()
     return 0;
 }
 
-/* Path is not correct i'll make changes later on*/
+/*
+1
+enter source: 1
+enter destination: 2
+enter weight: 2
+2
+enter source: 2
+enter destination: 3
+enter weight: 3
+
+0 2 0
+2 0 3
+0 3 0
+Vertex           Distance                Path
+0 ->1           2               00
+0 ->2           5               001
+*/
