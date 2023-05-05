@@ -115,16 +115,16 @@ public:
         if (parent[j] == -1)
             return;
         printPath(parent, parent[j]);
-        cout << parent[j];
+        cout << "->" << j;
     }
 
     void printSolution(int dist[], int n, int parent[])
     {
         int src = 0;
-        printf("Vertex\t\t Distance \t\t Path");
-        for (int i = 1; i < V; i++)
+        printf("Vertex\t Distance \t Path");
+        for (int i = 1; i < n; i++)
         {
-            printf("\n%d ->%d \t\t%d\t\t%d", src, i, dist[i], src);
+            printf("\n%d -> %d \t %d \t\t%d", src, i, dist[i], src);
             printPath(parent, i);
         }
     }
